@@ -4,9 +4,9 @@ from itertools import cycle, compress
 d = {
     'Simple': (lambda arr: sum(arr[:3]) == sum(arr[-3:])),
     'Difficult': (lambda arr: sum(i for i in arr if i % 2 == 0) ==
-                         sum(i for i in arr if i % 2 != 0)),
+                              sum(i for i in arr if i % 2 != 0)),
     'Mixed': (lambda arr: sum(compress(arr, cycle([0, 1]))) ==
-                     sum(compress(arr, cycle([1, 0]))))
+                          sum(compress(arr, cycle([1, 0]))))
 }
 
 with open(input('input file: '), 'r') as fd:

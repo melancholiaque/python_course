@@ -50,6 +50,14 @@ class NumToStr:
         9: 'девятьсот',
     }
 
+    @staticmethod
+    def last1(num):
+        return int(str(num)[-1])
+
+    @staticmethod
+    def last2(num):
+        return int(str(num)[-2:])
+
     def parse_before_thsausand(self, num):
         before_thousand = num % 100
         if before_thousand in self.a:
@@ -63,13 +71,15 @@ class NumToStr:
 
     def parse(self, num):
         hundreds = (num // 100) % 10
-        thousands = num // 1000
-        t1 = thousands // 100
-        thousands = self.parse_before_thsausand(thousands)
+        t2 = num // 1000
+        t1 = t2 // 100
+        thousands = self.parse_before_thsausand(t2)
         if thousands.endswith('один'):
             thousands = f"{thousands.replace('один', 'одна')} тысяча"
         elif thousands.endswith('два'):
             thousands = f"{thousands.replace('два', 'две')} тысячи"
+        elif self.last1(t2) in [5, 6, 7, 8, 9] or self.last2(t2) in self.a:
+            thousands = f"{thousands.replace('два', 'две')} тысяч"
         elif thousands:
             thousands += ' тысячи'
         return (f'{self.d[t1]} {thousands} {self.d[hundreds]} '
@@ -83,4 +93,4 @@ class NumToStr:
         return self.parse(self.num)
 
 
-print(NumToStr(765291).value)
+print(NumToStr(211000).value)
